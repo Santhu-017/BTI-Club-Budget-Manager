@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>  
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="styles.css">
    
 </head>
 <body class="bg-gray-100">
 
-<div id="login-screen">
-    <div class="card w-full max-w-sm p-8 shadow-xl">
+<div id="login-screen" style="background: linear-gradient(135deg, #232526 0%, #283e51 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="card w-full max-w-sm p-8 shadow-xl" style="background: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%); color: #222;">
         <div class="logo-container">
-            <img src="./bti logo.jpg" alt="BTI Logo" class="logo-image">
+            <img src="bti logo.jpg" alt="BTI Logo" class="logo-image">
             <h2 class="text-2xl font-bold text-center text-gray-800">BTI Club Budget</h2>
             <p class="text-sm text-gray-500 text-center">Management System</p>
         </div>
@@ -31,8 +31,10 @@
             <input type="password" id="login-password" class="form-input" placeholder="Enter password">
              <p class="text-xs text-gray-500 mt-1">Use 'password' for demo.</p>
         </div>
-        <button id="login-button" class="btn btn-primary w-full">Login</button>
-        <p id="login-error" class="text-red-500 text-sm text-center mt-4 hidden"></p>
+        <div class="flex flex-col gap-4 mt-4">
+            <button id="login-button" class="btn btn-primary w-full py-3 text-lg rounded-lg shadow-md">Login</button>
+        </div>
+        <p id="login-error" class="text-red-500 text-base text-center mt-4 hidden"></p>
     </div>
 </div>
 
@@ -40,7 +42,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="flex items-center">
-                 <img src="./bti logo.jpg" alt="BTI Logo Small" class="logo-sidebar">
+<img src="bti logo.jpg" alt="BTI Logo Small" class="logo-sidebar bti-logo-hover">
                 <div>
                     <h1 class="text-lg font-semibold">BTI Club Budget</h1>
                     <p class="text-xs text-gray-500">Management System</p>
@@ -49,11 +51,11 @@
          </div>
         <nav class="sidebar-content">
             <ul class="space-y-1">
-                <li><a href="#" class="sidebar-item flex items-center p-3 rounded-lg" data-page="dashboard"><i class="fas fa-tachometer-alt w-6 mr-3"></i> Dashboard</a></li>
-                <li><a href="#" class="sidebar-item flex items-center p-3 rounded-lg" data-page="clubs"><i class="fas fa-users w-6 mr-3"></i> Clubs</a></li>
-                 <li><a href="#" class="sidebar-item flex items-center p-3 rounded-lg" data-page="transactions"><i class="fas fa-money-bill-wave w-6 mr-3"></i> Transactions</a></li>
-                <li><a href="#" class="sidebar-item flex items-center p-3 rounded-lg" data-page="reports"><i class="fas fa-chart-pie w-6 mr-3"></i> Reports</a></li>
-                <li><a href="#" class="sidebar-item flex items-center p-3 rounded-lg" data-page="settings"><i class="fas fa-cog w-6 mr-3"></i> Settings</a></li>
+                <li><a href="#" class="sidebar-item flex items-center p-5 text-lg rounded-xl font-semibold transition-all duration-200 hover:bg-blue-100" data-page="dashboard"><i class="fas fa-tachometer-alt w-7 mr-4 text-xl"></i> Dashboard</a></li>
+                <li><a href="#" class="sidebar-item flex items-center p-5 text-lg rounded-xl font-semibold transition-all duration-200 hover:bg-blue-100" data-page="clubs"><i class="fas fa-users w-7 mr-4 text-xl"></i> Clubs</a></li>
+                <li><a href="#" class="sidebar-item flex items-center p-5 text-lg rounded-xl font-semibold transition-all duration-200 hover:bg-blue-100" data-page="transactions"><i class="fas fa-money-bill-wave w-7 mr-4 text-xl"></i> Transactions</a></li>
+                <li><a href="#" class="sidebar-item flex items-center p-5 text-lg rounded-xl font-semibold transition-all duration-200 hover:bg-blue-100" data-page="reports"><i class="fas fa-chart-pie w-7 mr-4 text-xl"></i> Reports</a></li>
+                <li><a href="#" class="sidebar-item flex items-center p-5 text-lg rounded-xl font-semibold transition-all duration-200 hover:bg-blue-100" data-page="settings"><i class="fas fa-cog w-7 mr-4 text-xl"></i> Settings</a></li>
             </ul>
          </nav>
         <div class="sidebar-footer">
@@ -62,7 +64,7 @@
                 <div class="font-medium text-sm" id="current-user-display"></div>
                 <div class="text-xs text-gray-500 capitalize" id="current-role-display"></div>
             </div>
-             <button id="logout-button" class="btn btn-secondary w-full flex items-center justify-center text-sm py-2"><i class="fas fa-sign-out-alt mr-2"></i> Logout</button>
+             <button id="logout-button" class="btn btn-secondary w-full flex items-center justify-center text-lg py-3 rounded-xl font-semibold"><i class="fas fa-sign-out-alt mr-2"></i> Logout</button>
         </div>
     </div>
 
@@ -127,7 +129,7 @@
             <div id="clubs" class="page hidden">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-semibold">Clubs</h2>
-                    <button id="add-club-button" class="btn btn-primary btn-sm">Add Club</button>
+                    <button id="add-club-button" class="btn btn-primary text-lg px-6 py-3 rounded-xl font-semibold">Add Club</button>
                 </div>
                  <div class="card overflow-hidden">
                     <div class="table-container">
@@ -147,7 +149,7 @@
             <div id="transactions" class="page hidden">
                  <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-semibold">Transactions</h2>
-                    <button id="add-transaction-button" class="btn btn-primary btn-sm">Add Transaction</button>
+                    <button id="add-transaction-button" class="btn btn-primary text-lg px-6 py-3 rounded-xl font-semibold">Add Transaction</button>
                 </div>
 
                 <div class="card p-4 mb-4">
@@ -178,8 +180,8 @@
                          </div>
                     </div>
                     <div class="flex justify-end mt-4">
-                        <button id="reset-transaction-search" class="btn btn-secondary" title="Clear all filters and sorting">
-                            <i class="fas fa-undo mr-1"></i> Reset View
+                        <button id="reset-transaction-search" class="btn btn-secondary text-lg px-6 py-3 rounded-xl font-semibold" title="Clear all filters and sorting">
+                            <i class="fas fa-undo mr-2"></i> Reset View
                         </button>
                     </div>
                  </div>
@@ -247,9 +249,9 @@
                              </select>
                         </div>
                          <div class="flex space-x-2">
-                            <button id="generate-report-button" class="btn btn-primary w-full">Generate</button>
-                            <button id="export-excel" class="btn btn-excel flex items-center justify-center w-full" title="Export Report to Excel">
-                                 <i class="fas fa-file-excel mr-1"></i> Export
+                            <button id="generate-report-button" class="btn btn-primary w-full text-lg px-6 py-3 rounded-xl font-semibold">Generate</button>
+                            <button id="export-excel" class="btn btn-excel flex items-center justify-center w-full text-lg px-6 py-3 rounded-xl font-semibold" title="Export Report to Excel">
+                                 <i class="fas fa-file-excel mr-2"></i> Export
                            </button>
                         </div>
                      </div>
@@ -270,7 +272,7 @@
                 <div id="user-management-section" class="card p-6 mb-6 hidden">
                      <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">Manage Users</h3>
-                        <button id="add-user-button" class="btn btn-primary btn-sm">Add User</button>
+                        <button id="add-user-button" class="btn btn-primary text-lg px-6 py-3 rounded-xl font-semibold">Add User</button>
                     </div>
                      <div class="table-container">
                         <table class="min-w-full table-auto">
@@ -299,8 +301,8 @@
                      <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Data Management (Admin Only)</label>
                           <div class="flex space-x-2 mt-1">
-                            <button id="export-data-button" class="btn btn-secondary btn-sm py-2"><i class="fas fa-download mr-1"></i> Export Data</button>
-                            <button id="import-data-button" class="btn btn-secondary btn-sm py-2"><i class="fas fa-upload mr-1"></i> Import Data</button>
+                            <button id="export-data-button" class="btn btn-secondary text-lg px-6 py-3 rounded-xl font-semibold"><i class="fas fa-download mr-2"></i> Export Data</button>
+                            <button id="import-data-button" class="btn btn-secondary text-lg px-6 py-3 rounded-xl font-semibold"><i class="fas fa-upload mr-2"></i> Import Data</button>
                             <input type="file" id="import-file-input" accept=".json" class="hidden">
                         </div>
                          <p class="text-xs text-gray-500 mt-1">Export your data as JSON file or import from a backup. Importing will overwrite existing data.</p>
@@ -312,14 +314,20 @@
                             <option value="dark" disabled>Dark (Not Implemented)</option>
                          </select>
                     </div>
-                    <button id="save-settings-button" class="btn btn-primary">Save Settings</button>
+                    <button id="save-settings-button" class="btn btn-primary text-lg px-6 py-3 rounded-xl font-semibold">Save Settings</button>
                    <p id="settings-saved-message" class="text-green-600 text-sm mt-2 hidden">Settings saved!</p>
                </div>
             </div>
         </div> </div> </div> <div id="add-club-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h2 id="club-modal-title">Add Club</h2><span class="close-button">&times;</span></div>
-        <div class="modal-body"><label for="club-name">Club Name</label><input type="text" id="club-name" class="form-input mt-1"></div>
+        <div class="modal-body">
+            <label for="club-name">Club Name</label>
+            <input type="text" id="club-name" class="form-input mt-1 mb-4">
+            <label for="club-image">Club Image</label>
+            <input type="file" id="club-image" class="form-input mt-1 mb-2" accept="image/*">
+            <div id="club-image-preview" class="mt-2 mb-2"></div>
+        </div>
         <div class="modal-footer"><button id="cancel-club-button" class="btn btn-secondary">Cancel</button><button id="save-club-button" class="btn btn-primary">Save</button></div>
     </div>
 </div>
@@ -340,11 +348,30 @@
 <div id="club-members-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h2 id="club-members-modal-title">Manage Club Members</h2><span class="close-button" id="close-members-modal">&times;</span></div>
-        <div class="modal-body"><div class="mb-6 pb-4 border-b border-gray-200"><h4 class="text-md font-semibold mb-2">Add New Member</h4><div class="flex items-end gap-2"><div class="flex-grow"><label for="add-club-member">Select User</label><select id="add-club-member" class="form-select mt-1"><option value="">Select User to Add</option></select></div><button id="add-member-button" class="btn btn-primary btn-sm flex-shrink-0">Add Member</button></div></div><h4 class="text-md font-semibold mb-2">Current Members</h4><div class="table-container"><table class="min-w-full table-auto"><thead class="bg-gray-100"><tr><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">User</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Role</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th></tr></thead><tbody id="club-members-list" class="bg-white divide-y divide-gray-200"></tbody></table></div></div>
+        <div class="modal-body">
+          <div class="mb-6 pb-4 border-b border-gray-200">
+            <h4 class="text-md font-semibold mb-2">Add New Member</h4>
+            <div class="flex flex-col md:flex-row items-end gap-2">
+              <div class="flex-grow mb-2 md:mb-0">
+                <label for="add-member-name">Member Name</label>
+                <input type="text" id="add-member-name" class="form-input mt-1" placeholder="Enter member name">
+              </div>
+              <div class="flex-grow mb-2 md:mb-0">
+                <label for="add-member-role">Role</label>
+                <select id="add-member-role" class="form-select mt-1">
+                  <option value="member">Member</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <button id="add-member-button" class="btn btn-primary btn-sm flex-shrink-0">Add Member</button>
+            </div>
+          </div>
+          <h4 class="text-md font-semibold mb-2">Current Members</h4>
+          <div class="table-container"><table class="min-w-full table-auto"><thead class="bg-gray-100"><tr><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">User</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Role</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th></tr></thead><tbody id="club-members-list" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+        </div>
         <div class="modal-footer"><button class="btn btn-secondary close-members-modal-button">Close</button></div>
     </div>
 </div>
-    
-<script src="./script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
