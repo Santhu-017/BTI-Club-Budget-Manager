@@ -1,3 +1,42 @@
+/* Club name hover effect in clubs list */
+.club-name-hover {
+  color: #3b82f6;
+  text-shadow: 0 0 8px #3b82f6, 0 0 16px #fff;
+  font-size: 2rem;
+  font-weight: 600;
+}
+/* Sidebar BTI Club Budget text hover effect */
+.sidebar-header h1 {
+  color: #fff;
+  text-shadow: 0 0 8px #fff, 0 0 16px #3b82f6;
+}
+/* White shadow on hover for all main logo images */
+.logo-image {
+  transition: box-shadow 0.3s, filter 0.3s;
+}
+.logo-image:hover {
+  box-shadow: 0 0 16px 4px rgba(255,255,255,0.85);
+  filter: brightness(1.1);
+}
+/* White shadow on hover for BTI logo in sidebar */
+.bti-logo-hover {
+  transition: box-shadow 0.3s, filter 0.3s;
+}
+.bti-logo-hover:hover {
+  box-shadow: 0 0 16px 4px rgba(255,255,255,0.85);
+  filter: brightness(1.1);
+}
+/* Club image hover effect */
+.club-image-hover {
+  width: 60px;
+  height: 60px;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.club-image-hover:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 24px 0 rgba(59,130,246,0.25), 0 4px 16px 0 rgba(0,0,0,0.18);
+  z-index: 2;
+}
 body {
   font-family: "Inter", sans-serif;
 }
