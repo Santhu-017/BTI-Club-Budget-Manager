@@ -1,0 +1,10 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.clubbudget.app
+productName: BTI Club Budget Manager
+win:
+  target: nsis
+  icon: bti logo.jpg
+files: []
+electronVersion: 28.3.3
