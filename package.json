@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "name": "club-budget-manager",
+    "version": "1.0.0",
+    "description": "BTI Student's Club Budget Management System",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "build": "electron-builder"
+    },
+    "author": "santhosh",
+    "license": "ISC",
+    "devDependencies": {
+      "electron": "^28.1.0",
+      "electron-builder": "^24.9.1"
+    },
+    "build": {
+      "appId": "com.clubbudget.app",
+      "productName": "BTI Club Budget Manager",
+      "win": {
+        "target": "nsis",
+        "icon": "bti logo.jpg"
+      }
+    }
+  }
