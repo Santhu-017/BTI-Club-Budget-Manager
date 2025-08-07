@@ -155,6 +155,12 @@ let transactionSortDirection = "desc"; // Default sort direction (newest first)
 let debounceTimer; // For text search debounce
 
 // --- DOM Elements ---
+// Welcome Screen
+const welcomeOverlay = document.getElementById('welcome-overlay');
+const welcomeUserName = document.getElementById('welcome-user-name');
+const welcomeCursor = document.getElementById('welcome-cursor');
+const welcomeSubtitle = document.getElementById('welcome-subtitle');
+
 // Search Elements
 // const searchTransactionButton = document.getElementById('search-transaction-button'); // Removed explicit button
 const transactionSearch = document.getElementById("transaction-search");
@@ -272,6 +278,14 @@ const userFullnameInput = document.getElementById("user-fullname");
 const usernameInput = document.getElementById("user-username");
 const userRoleSelect = document.getElementById("user-role");
 const userPasswordInput = document.getElementById("user-password");
+const showPasswordCheckbox = document.getElementById("show-password-checkbox");
+
+if (showPasswordCheckbox && userPasswordInput) {
+  showPasswordCheckbox.addEventListener("change", function () {
+    userPasswordInput.type = this.checked ? "text" : "password";
+  });
+}
+
 const saveUserButton = document.getElementById("save-user-button");
 const cancelUserButton = document.getElementById("cancel-user-button");
 // Club Members Modal
@@ -288,6 +302,24 @@ const closeMembersModalButtons = document.querySelectorAll(
 );
 
 // --- Utility Functions ---
+
+// Typing effect for welcome message
+function typeWriter(element, text, speed, callback) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        } else {
+            // Short delay after typing before firing the callback
+            if (callback) setTimeout(callback, 300);
+        }
+    }
+    type();
+}
 
 // ENHANCEMENT: Debounce function
 function debounce(func, delay) {
@@ -477,25 +509,55 @@ function importData(file) {
 
 // --- Login/Logout Logic (Unchanged - Still insecure) ---
 loginButton.addEventListener("click", () => {
-  /* ... (login logic unchanged) ... */
-  const username = loginUsernameInput.value.trim();
-  const password = loginPasswordInput.value;
-  loginError.classList.add("hidden");
-  const foundUser = users.find(
-    (u) => u.username.toLowerCase() === username.toLowerCase()
-  );
-  if (foundUser && foundUser.password === password) {
-    currentUser = foundUser;
-    loginScreen.style.display = "none";
-    appContainer.style.display = "flex";
-    appContainer.classList.add("visible");
-    initializeAppUI();
-    loginUsernameInput.value = "";
-    loginPasswordInput.value = "";
-  } else {
-    showAlert("Invalid username or password.", "error");
-    currentUser = null;
-  }
+    const username = loginUsernameInput.value.trim();
+    const password = loginPasswordInput.value;
+    loginError.classList.add("hidden");
+    const foundUser = users.find(
+        (u) => u.username.toLowerCase() === username.toLowerCase()
+    );
+
+    if (foundUser && foundUser.password === password) {
+        currentUser = foundUser;
+
+        // --- ENHANCED WELCOME SEQUENCE ---
+
+        // 1. Reset animation states
+        welcomeSubtitle.textContent = '';
+        welcomeSubtitle.classList.remove('visible');
+        welcomeCursor.style.display = 'inline-block';
+
+        // 2. Show overlay
+        welcomeOverlay.classList.add('visible');
+        loginScreen.style.display = 'none';
+
+        // 3. Start typing effect
+        const nameToType = currentUser.fullName || currentUser.username;
+        typeWriter(welcomeUserName, nameToType, 100, () => {
+            // This is the callback function, runs after typing is done
+            welcomeCursor.style.display = 'none'; // Hide cursor
+            welcomeSubtitle.textContent = 'Getting your dashboard ready...';
+            welcomeSubtitle.classList.add('visible'); // Animate in subtitle
+        });
+
+        // 4. Timers to end the sequence
+        const totalDuration = 3500; // Total time for the overlay in ms
+        
+        setTimeout(() => {
+            welcomeOverlay.classList.remove('visible'); // Start fade out
+        }, totalDuration - 500); // Start fade out 500ms before the end
+
+        setTimeout(() => {
+            appContainer.style.display = "flex";
+            appContainer.classList.add("visible");
+            initializeAppUI();
+            loginUsernameInput.value = "";
+            loginPasswordInput.value = "";
+        }, totalDuration);
+
+    } else {
+        showAlert("Invalid username or password.", "error");
+        currentUser = null;
+    }
 });
 function handleLogout() {
   /* ... (logout logic unchanged) ... */
@@ -529,32 +591,32 @@ function initializeAppUI() {
   resetTransactionSearch(); // Reset filters/sort AND render initial transactions
   renderRecentTransactions();
   renderDashboardCharts();
-renderSettingsUserList();
-updateClubDropdowns();
-switchPage("dashboard");
-setReportDefaults();
-addCommonEventListeners();
-console.log(
-  "App Initialized for user:",
-  currentUser.username,
-  "Role:",
-  currentUser.role
-);
-addSearchEventListeners(); // Ensure search listeners are added *after* elements exist
+  renderSettingsUserList();
+  updateClubDropdowns();
+  switchPage("dashboard");
+  setReportDefaults();
+  addCommonEventListeners();
+  console.log(
+    "App Initialized for user:",
+    currentUser.username,
+    "Role:",
+    currentUser.role
+  );
+  addSearchEventListeners(); // Ensure search listeners are added *after* elements exist
 
-// --- Settings: Create User from Pending Member ---
-settingsUserList.addEventListener("click", function (e) {
-  const btn = e.target.closest(".create-user-from-member");
-  if (!btn) return;
-  const memberName = btn.getAttribute("data-member-name");
-  const memberRole = btn.getAttribute("data-member-role") || "member";
-  openAddUserModal();
-  userFullnameInput.value = memberName;
-  userRoleSelect.value = memberRole;
-  usernameInput.value = "";
-  userPasswordInput.value = "";
-  setTimeout(() => usernameInput.focus(), 100);
-});
+  // --- Settings: Create User from Pending Member ---
+  settingsUserList.addEventListener("click", function (e) {
+    const btn = e.target.closest(".create-user-from-member");
+    if (!btn) return;
+    const memberName = btn.getAttribute("data-member-name");
+    const memberRole = btn.getAttribute("data-member-role") || "member";
+    openAddUserModal();
+    userFullnameInput.value = memberName;
+    userRoleSelect.value = memberRole;
+    usernameInput.value = "";
+    userPasswordInput.value = "";
+    setTimeout(() => usernameInput.focus(), 100);
+  });
 }
 
 // --- Apply Permissions Based on Role (CLIENT-SIDE ONLY - INSECURE) ---
